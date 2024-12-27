@@ -1,0 +1,12 @@
+import { fn } from '@storybook/test'; import {
+{{pascalCase name}}
+} from './{{pascalCase name}}'; export default { title: '{{titleCase type}}/{{pascalCase name}}',
+component:
+{{pascalCase name}}, parameters: { layout: 'centered', }, tags: ['autodocs'], argTypes: { className:
+{ control: 'text' }, backgroundColor: { control: 'color' }, size: { control: { type: 'select' },
+options: ['small', 'medium', 'large'], }, }, args: { onClick: fn() }, }; export const Default = {
+args: { label: '{{pascalCase name}}', }, }; export const Large = { args: { size: 'large', label: '{{pascalCase
+  name
+}}', }, }; export const Small = { args: { size: 'small', label: '{{pascalCase name}}', }, }; export
+const WithCustomClass = { args: { className: 'custom-class', label: '{{pascalCase name}}
+with custom class', }, };

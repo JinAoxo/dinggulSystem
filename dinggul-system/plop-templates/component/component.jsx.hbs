@@ -1,0 +1,26 @@
+import PropTypes from 'prop-types'; import './{{pascalCase name}}.css'; export const
+{{pascalCase name}}
+= ({ label, className = '', backgroundColor, size = 'medium', onClick, ...props }) => { const
+baseClass = '{{kebabCase name}}'; const sizeClass = size ? `${baseClass}--${size}` : ''; const
+classes = [baseClass, sizeClass, className].filter(Boolean).join(' '); return (
+<button
+  type='button'
+  className='{classes}'
+  onClick='{onClick}'
+  style='{backgroundColor'
+  ?
+  {
+  backgroundColor
+  }
+  :
+  undefined}
+  {...props}
+>
+  {label}
+</button>
+); };
+
+{{pascalCase name}}.propTypes = { label: PropTypes.string.isRequired, className: PropTypes.string,
+backgroundColor: PropTypes.string, size: PropTypes.oneOf(['small', 'medium', 'large']), onClick:
+PropTypes.func, }; export default
+{{pascalCase name}};
