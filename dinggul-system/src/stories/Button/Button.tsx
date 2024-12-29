@@ -2,80 +2,94 @@ import React from 'react';
 import './button.scss';
 
 interface ButtonProps {
-  designType?: 'type01' | 'type02' | 'type03';
-  primary?: boolean;
-  backgroundColor?: string | null;
-  size?: 'small' | 'medium' | 'large';
-  variant?: 'contained' | 'outlined' | 'text';
   label: string;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'full';
+  variant?: 'default' | 'primary' | 'outline-default' | 'outline-primary';
+  className?: string;
+
+  // HTML 태그 타입
+  as?: 'button' | 'a';
+
+  // 링크 관련 props
+  href?: string;
+  target?: string;
+  title?: string;
+  isExternalLink?: boolean;
+
   onClick?: () => void;
   disabled?: boolean;
   readonly?: boolean;
+
+  // 디자인 타입
+  designType?: 'type01' | 'type02' | 'type03';
 }
 
-const DESIGN_TYPES = {
-  type01: {
-    base: 'btn-type01',
-    styles: {
-      primary: 'bg-blue-500 text-white',
-      secondary: 'bg-gray-500 text-white',
-    },
-  },
-  type02: {
-    base: 'btn-type02',
-    styles: {
-      primary: 'border-2 border-blue-500 text-blue-500',
-      secondary: 'border-2 border-gray-500 text-gray-500',
-    },
-  },
-  type03: {
-    base: 'btn-type03',
-    styles: {
-      primary: 'bg-gradient-to-r from-blue-500 to-purple-500 text-white',
-      secondary: 'bg-gradient-to-r from-gray-500 to-gray-700 text-white',
-    },
-  },
-};
-
 export const Button = ({
-  designType = 'type01',
-  primary = false,
-  backgroundColor = null,
-  size = 'medium',
   label,
+  size = 'md',
+  variant = 'default',
+  className = '',
+  as = 'button',
+  href,
+  target,
+  title,
+  isExternalLink = false,
+
+  onClick,
   disabled = false,
   readonly = false,
+  designType,
   ...props
 }: ButtonProps) => {
-  const designConfig = DESIGN_TYPES[designType];
-  const mode = primary ? designConfig.styles.primary : designConfig.styles.secondary;
   const baseClasses = [
     'btn',
-    designConfig.base,
     `btn-${size}`,
-    mode,
+    `btn-${variant}`,
+    `btn-${designType}`,
     disabled ? 'btn-disabled' : '',
     readonly ? 'btn-readonly' : '',
+    className,
   ]
     .filter(Boolean)
     .join(' ');
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     if (disabled || readonly) {
       e.preventDefault();
       return;
     }
-    if (props.onClick) {
-      props.onClick();
+    if (onClick) {
+      onClick();
     }
   };
+
+  // href가 있거나 as가 'a'로 지정된 경우 앵커 태그로 렌더링
+  if (href || as === 'a') {
+    return (
+      <a
+        href={href || '#'}
+        className={baseClasses}
+        onClick={handleClick as React.MouseEventHandler<HTMLAnchorElement>}
+        target={target}
+        title={title}
+        rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+        {...(disabled && { 'aria-disabled': true })}
+        {...(readonly && { tabIndex: -1, 'aria-readonly': true })}
+        {...props}
+      >
+        {label}
+        {isExternalLink && target === '_blank' && (
+          <i className="ico ico-external-link ml-1" aria-hidden="true" />
+        )}
+      </a>
+    );
+  }
 
   return (
     <button
       type="button"
       className={baseClasses}
-      style={backgroundColor ? { backgroundColor } : undefined}
-      onClick={handleClick}
+      onClick={handleClick as React.MouseEventHandler<HTMLButtonElement>}
       disabled={disabled}
       aria-disabled={disabled || readonly}
       tabIndex={readonly ? -1 : 0}

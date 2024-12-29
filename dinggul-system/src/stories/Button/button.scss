@@ -1,30 +1,152 @@
-.storybook-button {
-  display: inline-block;
-  cursor: pointer;
-  border: 0;
-  border-radius: 3em;
-  font-weight: 700;
-  line-height: 1;
-  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+@import '../assets/scss/common.scss';
+
+/* 공통 스타일 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+
+  font-family: $font-family-base;
+  font-weight: normal;
+
+  transition-duration: 0.2s;
+  transition-property: box-shadow, transform;
+  will-change: box-shadow, transform;
+
+  .ico {
+    flex: 0 0 auto;
+    &:first-child {
+      margin-right: 4px;
+    }
+
+    &:only-child {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  * + .ico {
+    margin-left: 4px;
+  }
 }
-.storybook-button--primary {
-  background-color: #1ea7fd;
-  color: white;
+
+/* 크기 스타일 */
+.btn {
+  &-xs,
+  &-sm,
+  &-md,
+  &-lg {
+    border-radius: 4px;
+
+    &:hover,
+    &:focus-within {
+      box-shadow: $shadow;
+    }
+  }
 }
-.storybook-button--secondary {
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;
-  background-color: transparent;
-  color: #333;
+
+.btn {
+  &-xs {
+    min-width: 50px;
+    height: 20px;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    font-size: 12px;
+  }
+  &-sm {
+    min-width: 65px;
+    height: 30px;
+    padding: 0 14px;
+    border: 1px solid transparent;
+    font-size: 14px;
+  }
+  &-md {
+    min-width: 80px;
+    height: $form-height;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    font-size: 15px;
+  }
+  &-lg {
+    min-width: 90px;
+    height: $form-height;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    font-size: $font-size-lg;
+  }
+
+  &-full {
+    display: flex;
+    width: 100%;
+    height: $form-height;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    font-size: $font-size-lg;
+  }
 }
-.storybook-button--small {
-  padding: 10px 16px;
-  font-size: 12px;
+/* 색상 및 변형 스타일 */
+// 버튼 색상
+.btn {
+  &-default {
+    color: $white;
+    background-color: #7b7b7b;
+  }
+  &-primary {
+    color: $white;
+    background-color: $primary;
+  }
+  &-secondary {
+    color: $white;
+    background-color: $secondary;
+  }
+
+  &-outline-default {
+    color: $default;
+    border-color: #959595;
+    background-color: #fff;
+  }
+
+  &-outline-primary {
+    color: $primary;
+    border-color: $primary;
+    background-color: #fff;
+  }
 }
-.storybook-button--medium {
-  padding: 11px 20px;
-  font-size: 14px;
+
+// 아이콘 스타일
+.btn {
+  .ico {
+    flex: 0 0 auto;
+
+    &:first-child {
+      margin-right: 4px;
+    }
+
+    &:only-child {
+      margin: 0;
+    }
+  }
+
+  * + .ico {
+    margin-left: 4px;
+  }
+
+  &-icon {
+    min-width: auto;
+
+    .ico {
+      margin: 0;
+    }
+  }
 }
-.storybook-button--large {
-  padding: 12px 24px;
-  font-size: 16px;
+
+// 라운드 스타일
+.btn-round {
+  border-radius: 25px;
 }
+
+/* 버튼 + 특정조합 */

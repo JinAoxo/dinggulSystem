@@ -16,5 +16,9 @@ const config = {
     options: {},
   },
   staticDirs: ['..\\public'],
+  features: {
+    isFullscreen: false,
+    panelPosition: 'right',
+  },
 };
 export default config;

@@ -1,0 +1,175 @@
+//
+// Global variables
+//
+
+// 사이트 기본 설정
+
+$responsive: true !default;
+$site: default !default; // 복사 원본 사이트 디렉토리
+
+// 경로
+$url-img: '../images' !default;
+$url-img-common: '../../_common/images' !default;
+
+// COLORS
+$default: #333 !default;
+$white: #fff !default;
+
+$primary: #1f76eb !default;
+$darkprimary: #2768bf !default;
+$secondary: #f77120 !default;
+
+$yellow: $secondary !default;
+$orange: $secondary !default;
+$red: #e13224 !default;
+$gray: #666 !default;
+$lightgray: #999 !default;
+$darkgray: #666 !default;
+$invalid: $red !default;
+$valid: #1c8ebf !default;
+
+$bg-primary: #428cf0 !default;
+$bg-darkprimary: #004a85 !default;
+$bg-lightprimary: #dfedff !default;
+
+$bg-gray: #f3f3f3 !default;
+$bg-darkgray: #7c7c7c !default;
+$bg-lightgray: #f9f9f9 !default;
+
+$bg-whiteblue: #f3f8ff !default;
+$bg-grayblue: #e5ecf6 !default;
+
+$border-base: #e3e3e3 !default;
+$border-light: #eee !default;
+$border-dark: #aaa !default;
+
+$btn-primary: $darkprimary !default;
+
+$placeholder-color: #959595;
+$disabled-color: #c2c2c2;
+$border-active: #428cf0;
+
+// END COLORS
+
+$colors: () !default;
+$colors: map-merge(
+  (
+    'default': $default,
+    'white': $white,
+    'primary': $primary,
+    'darkprimary': $darkprimary,
+    'secondary': $secondary,
+    'invalid': $invalid,
+    'valid': $valid,
+    // "orange": $orange,
+    // "green": $green,
+    // "violet": $violet,
+    'red': $red,
+    // "blue": $blue,
+    'gray': $gray,
+    'lightgray': $lightgray,
+    'darkgray': $darkgray,
+  ),
+  $colors
+);
+
+$dark-bg-colors: () !default;
+$dark-bg-colors: map-merge(
+  (
+    'bg-default': $default,
+    'bg-primary': $bg-primary,
+    'bg-darkprimary': $bg-darkprimary,
+    'bg-darkgray': $bg-darkgray,
+    'bg-secondary': $secondary,
+    'bg-invalid': $invalid,
+    'bg-valid': $valid,
+  ),
+  $dark-bg-colors
+);
+
+$light-bg-colors: () !default;
+$light-bg-colors: map-merge(
+  (
+    'bg-lightgray': $bg-lightgray,
+    'bg-gray': $bg-gray,
+    'bg-lightprimary': $bg-lightprimary,
+    'bg-grayblue': $bg-grayblue,
+    'bg-whiteblue': $bg-whiteblue,
+    'bg-white': #fff,
+  ),
+  $light-bg-colors
+);
+
+// 글꼴
+$letter-spacing: 0 !default;
+$letter-spacing-mobile: 0 !default;
+
+$font-family-base: // -apple-system,
+// BlinkMacSystemFont,
+  'Noto Sans KR', 'Noto Sans CJK KR', 'NotoSansKR', 'malgun gothic', Arial, sans-serif !default;
+
+$font-family-title: // 'S-core Dream 5',
+  's-core-dream', 'malgun gothic', Arial, sans-serif !default;
+
+$font-family-mobile: $font-family-base;
+
+// $font-size-xs: 14px !default;
+$font-size-sm: 14px !default;
+$font-size-base: 15px !default;
+$font-size-lg: 16px !default;
+$font-size-xl: 18px !default;
+$font-size-xxl: 24px !default;
+$font-size-xxxl: 30px !default;
+
+// breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 1025px,
+  xl: 1200px,
+  xxl: 1740px,
+) !default;
+
+//
+// 그리드
+//
+
+$min-width: 360px !default;
+$max-width: 1200px !default;
+
+// PC
+$spacing: 20px !default;
+$topnav-height: 50px !default;
+$header-util-height: 88px !default;
+$gnb-height: 51px !default;
+$header-height: $topnav-height + $header-util-height + $gnb-height !default;
+$header-height-closed: 78px !default;
+$breadcrumb-height: 56px !default;
+$sidebar-width: 220px !default;
+$footer-height: 188px !default;
+
+$spacing-lg: 55px;
+$spacing-md: 30px;
+$spacing-sm: 10px;
+
+$form-height: 40px;
+$btn-margin: 10px;
+
+// Mobile
+$mobile-spacing: 15px !default;
+
+$mobile-topnav-height: 35px !default;
+$mobile-header-height: 50px !default;
+$mobile-breadcrumb-height: 30px !default;
+$mobile-footer-height: 195px !default;
+
+// $mobile-allmenu-header: 157px !default;
+// $mobile-allmenu-footer: 50px !default;
+
+//
+// 그리드
+//
+
+// 박스 호버 스타일
+$shadow: 0px 2px 9px 0px rgba(0, 0, 0, 0.2);
