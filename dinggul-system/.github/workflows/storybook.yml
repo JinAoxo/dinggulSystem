@@ -1,58 +1,36 @@
 name: Deploy Storybook
-
-# 어떤 이벤트가 발생했을 때 실행할지 정의
 on:
   push:
     branches:
-      - master # main 브랜치에 push가 발생했을 때
-  pull_request:
-    branches:
-      - master # main 브랜치로 PR이 생성됐을 때
-
-# 실행할 작업 정의
+      - master
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest # 실행환경
+    runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pages: write
-      id-token: write
+      contents: write # 필수 권한
+      pages: write # 필수 권한
+      id-token: write # 필수 권한
     steps:
-      # 코드 체크아웃
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          persist-credentials: false
+          fetch-depth: 0 # 모든 히스토리 가져오기
 
-      # Node.js 설정
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # 또는 프로젝트에서 사용하는 Node 버전
+          node-version: '18'
 
-      # npm 캐시 설정 (선택사항이지만 빌드 속도 향상)
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # 의존성 설치
       - name: Install dependencies
-        run: npm ci # 또는 yarn install --frozen-lockfile
+        run: npm install # npm ci 대신 npm install 사용
 
-      # Storybook 빌드
       - name: Build Storybook
         run: npm run build-storybook
-        env:
-          NODE_OPTIONS: --max_old_space_size=4096 # 메모리 제한 증가 (선택사항)
 
-      # GitHub Pages에 배포
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages # 배포할 브랜치
-          folder: storybook-static # 배포할 폴더
-          clean: true # 배포 전 기존 파일 삭제
+          folder: storybook-static
+          branch: gh-pages
+          clean: true
+          token: ${{ secrets.GITHUB_TOKEN }} # 토큰 명시적 추가
