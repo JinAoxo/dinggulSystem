@@ -17,23 +17,35 @@ style.textContent = `
     }
     .btn-copy {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 8px 12px;
-      background: #1ea7fd;
-      color: white;
-      border: none;
-      border-radius: 4px;
+      top: 0px;
+      right: 0px;
+      border-width: 0px 0px 1px 1px;
+      border-style: none none solid solid;
+      border-right-color: initial;
+      border-top-color: initial;
+      border-image: initial;
+      padding: 4px 10px;
       cursor: pointer;
-      font-size: 14px;
+      display: flex;
+      align-items: center;
+      color: rgb(46, 52, 56);
+      background: rgb(255, 255, 255);
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 700;
+      border-bottom-color: rgba(38, 85, 115, 0.15);
+      border-left-color: rgba(38, 85, 115, 0.15);
+      border-radius:  0px 0px 0px 4px;
     }
     
-    .btn-copy:hover {
-      background: #0088e2;
+    .btn-copy:focus {
+      box-shadow: rgb(2, 156, 253) 0px -3px 0px 0px inset;
+      outline: none 0px;
     }
     
     .btn-copy.copied {
-      background: #66bf3c;
+      box-shadow: rgb(2, 156, 253) 0px -3px 0px 0px inset;
+      outline: none 0px;
     }
 
     .code-viewer {
@@ -58,6 +70,7 @@ style.textContent = `
       display: block;
       padding-left: 3.5em;
       min-width: max-content;
+      font-family: ui-monospace, Menlo, Monaco, "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Droid Sans Mono", "Courier New", monospace;
     }
 
     .code-viewer code > div {
@@ -170,16 +183,18 @@ export const decorators = [
 
             if (el.nodeType === Node.ELEMENT_NODE) {
               const tagName = el.tagName.toLowerCase();
-              const attributes = Array.from(el.attributes || []).map(attr => {
-                return `<span class="attr-name">${attr.name}</span>=<span class="attr-value">"${attr.value}"</span>`;
+
+              // 시작 태그와 속성들을 별도의 줄에 표시
+              result.push(`<div>${indent}&lt;<span class="tag">${tagName}</span>&gt;</div>`);
+
+              // 각 속성을 새로운 줄에 표시
+              Array.from(el.attributes || []).forEach(attr => {
+                result.push(
+                  `<div>${indent}  <span class="attr-name">${attr.name}</span>=<span class="attr-value">"${attr.value}"</span></div>`
+                );
               });
 
-              result.push(
-                `<div>${indent}&lt;<span class="tag">${tagName}</span>${
-                  attributes.length ? ' ' + attributes.join(' ') : ''
-                }&gt;</div>`
-              );
-
+              // 자식 요소들 처리
               Array.from(el.childNodes).forEach(child => {
                 result.push(...indentElement(child, level + 1));
               });
@@ -193,6 +208,7 @@ export const decorators = [
                 return result;
               }
 
+              // 종료 태그
               result.push(`<div>${indent}&lt;/<span class="tag">${tagName}</span>&gt;</div>`);
             }
 
