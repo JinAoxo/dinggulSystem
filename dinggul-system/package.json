@@ -22,8 +22,7 @@
     "test:coverage": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o storybook-static",
-    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\""
