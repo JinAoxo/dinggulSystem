@@ -4,37 +4,22 @@ on:
     branches:
       - master
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          persist-credentials: false
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Storybook
-        run: npm run build-storybook
-
-      - name: Create gh-pages branch
+      - name: Install and Build
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git checkout -b gh-pages
-          git add -f storybook-static
-          git commit -m "Deploy Storybook to GitHub Pages"
-          git push origin gh-pages -f
+          npm install
+          npm run build-storybook
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages
-          folder: storybook-static
-          clean: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./storybook-static
+          force_orphan: true
