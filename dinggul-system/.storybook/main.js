@@ -21,10 +21,7 @@ const config = {
     panelPosition: 'right',
   },
   viteFinal: async config => {
-    // GitHub Pages를 위한 base URL 설정
-    if (process.env.BUILD_MODE === 'production') {
-      config.base = '/Dinggul/';
-    }
+    config.base = '/dinggulSystem/';
     return config;
   },
 };
