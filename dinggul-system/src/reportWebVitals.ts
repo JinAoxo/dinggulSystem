@@ -1,7 +1,6 @@
-// Update reportWebVitals.ts
-import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
+import { getCLS, getFID, getFCP, getLCP, getTTFB, Metric } from 'web-vitals';
 
-const reportWebVitals = async (onPerfEntry?: (metric: any) => void) => {
+const reportWebVitals = async (onPerfEntry?: (metric: Metric) => void) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     getCLS(onPerfEntry);
     getFID(onPerfEntry);
