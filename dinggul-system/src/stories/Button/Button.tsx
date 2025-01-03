@@ -33,8 +33,7 @@ export const Button = ({
   href,
   target,
   title,
-  isExternalLink = false,
-
+  isExternalLink,
   onClick,
   disabled = false,
   readonly = false,
@@ -46,8 +45,8 @@ export const Button = ({
     `btn-${size}`,
     `btn-${variant}`,
     `btn-${designType}`,
-    disabled ? 'btn-disabled' : '',
-    readonly ? 'btn-readonly' : '',
+    // disabled ? 'btn-disabled' : '',
+    // readonly ? 'btn-readonly' : '',
     className,
   ]
     .filter(Boolean)
@@ -68,13 +67,11 @@ export const Button = ({
     return (
       <a
         href={href || '#'}
-        className={baseClasses}
+        className={`${baseClasses}${disabled ? ' disabled' : ''}${readonly ? ' readonly' : ''}`}
         onClick={handleClick as React.MouseEventHandler<HTMLAnchorElement>}
         target={target}
         title={title}
         rel={target === '_blank' ? 'noopener noreferrer' : undefined}
-        {...(disabled && { 'aria-disabled': true })}
-        {...(readonly && { tabIndex: -1, 'aria-readonly': true })}
         {...props}
       >
         {label}
@@ -91,8 +88,9 @@ export const Button = ({
       className={baseClasses}
       onClick={handleClick as React.MouseEventHandler<HTMLButtonElement>}
       disabled={disabled}
-      aria-disabled={disabled || readonly}
-      tabIndex={readonly ? -1 : 0}
+      data-readonly={readonly}
+      // aria-disabled={disabled || readonly}
+      // tabIndex={readonly ? -1 : 0}
       {...props}
     >
       {label}

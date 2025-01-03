@@ -5,16 +5,7 @@ import { STORY_RENDERED } from '@storybook/core-events';
 // 복사 기능을 위한 스타일 추가
 const style = document.createElement('style');
 style.textContent = `
-    .sb-html-preview>div{
-    display: flex;
-    flex-direction: column;
-    }
-    .sb-html-preview h3{
-    flex : 0 0 auto
-    }
-    .sb-html-preview .code-viewer{
-    flex : 1 1 auto
-    }
+  
     .btn-copy {
       position: absolute;
       top: 0px;
@@ -100,6 +91,11 @@ style.textContent = `
 
     .code-viewer .attr-value {
       color: #0550ae;
+    }
+
+    .css-tugzzb {
+      width: 100%;
+      max-width: 100%;
     }
 `;
 
