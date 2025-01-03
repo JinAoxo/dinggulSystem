@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "https://jinaoxo.github.io/dinggulSystem/static/css/main.f9c205ef.css",
+    "main.js": "https://jinaoxo.github.io/dinggulSystem/static/js/main.ba4b1f19.js",
+    "index.html": "https://jinaoxo.github.io/dinggulSystem/index.html",
+    "main.f9c205ef.css.map": "https://jinaoxo.github.io/dinggulSystem/static/css/main.f9c205ef.css.map",
+    "main.ba4b1f19.js.map": "https://jinaoxo.github.io/dinggulSystem/static/js/main.ba4b1f19.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f9c205ef.css",
+    "static/js/main.ba4b1f19.js"
+  ]
+}
