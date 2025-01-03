@@ -2,6 +2,8 @@
 import { addons } from '@storybook/preview-api';
 import { STORY_RENDERED } from '@storybook/core-events';
 
+import { DocsContainer } from '@storybook/addon-docs';
+
 // 복사 기능을 위한 스타일 추가
 const style = document.createElement('style');
 style.textContent = `
@@ -261,6 +263,14 @@ const preview = {
     previewTabs: {
       canvas: { hidden: false },
       'storybook/docs/panel': { hidden: true },
+    },
+    docs: {
+      container: DocsContainer,
+      // theme: {
+      //   brandTitle: 'My Custom Docs',
+      //   brandUrl: 'https://example.com',
+      //   brandImage: '/my-logo.png',
+      // }
     },
   },
 };

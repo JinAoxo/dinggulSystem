@@ -18,6 +18,13 @@ const config = {
       propFilter: prop => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
     },
   },
+  docs: {
+    autodocs: true,
+    defaultName: 'Documentation',
+    story: {
+      inline: true,
+    },
+  },
   webpackFinal: async config => {
     config.module.rules.push({
       test: /\.(ts|tsx)$/,
