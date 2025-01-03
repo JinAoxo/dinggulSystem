@@ -1,0 +1,33 @@
+name: Deploy Storybook
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Storybook 빌드에 필요한 의존성 설치
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install --save-dev @storybook/cli
+
+      # Storybook 빌드
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      # 빌드된 Storybook을 gh-pages 브랜치에 배포
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./storybook-static # 빌드된 Storybook 파일이 있는 디렉토리
+          force_orphan: true # gh-pages 브랜치를 깨끗하게 유지
