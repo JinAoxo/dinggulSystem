@@ -30,7 +30,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://jinaoxo.github.io/dinggulSystem/",
+  "homepage": "https://jinaoxo.github.io/dinggulSystem",
   "eslintConfig": {
     "extends": [
       "react-app",
