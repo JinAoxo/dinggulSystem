@@ -1,0 +1,376 @@
+@use "sass:color";
+@use "sass:map";
+@use "sass:list";
+
+/* 기본 변수값 정의 ===== */
+
+// 기본 사이즈
+$btn-padding-xs: 4px 8px;
+$btn-padding-sm: 6px 12px;
+$btn-padding-md: 8px 16px;
+$btn-padding-lg: 12px 24px;
+
+$btn-font-size-xs: 12px;
+$btn-font-size-sm: 14px;
+$btn-font-size-md: 16px;
+$btn-font-size-lg: 18px;
+
+// 기본 스타일
+$btn-border-radius: 4px;
+$btn-fab-border-radius: 50%;
+
+// 기본 색상
+$btn-primary-color: #1976d2;
+$btn-secondary-color: #6c757d;
+$btn-text-color: #212529;
+$btn-text-bg: #f8f9fa;
+
+// 상태별 색상
+$btn-primary-hover: color.adjust($btn-primary-color, $lightness: 10%);
+$btn-primary-active: color.adjust($btn-primary-color, $lightness: -10%);
+$btn-primary-focus: rgba($btn-primary-color, 0.1);
+$btn-primary-disabled: rgba($btn-primary-color, 0.3);
+$btn-primary-border: $btn-primary-color;
+
+$btn-secondary-hover: color.adjust($btn-secondary-color, $lightness: 40%);
+$btn-secondary-active: color.adjust($btn-secondary-color, $lightness: -10%);
+$btn-secondary-focus: rgba($btn-secondary-color, 0.1);
+$btn-secondary-disabled: rgba($btn-secondary-color, 0.3);
+$btn-secondary-border: $btn-secondary-color;
+
+$btn-text-hover: rgba($btn-text-color, 0.1);
+$btn-text-active: rgba($btn-text-color, 0.2);
+$btn-text-focus: rgba($btn-text-color, 0.05);
+$btn-text-disabled: rgba($btn-text-color, 0.3);
+$btn-text-border: transparent;
+
+// 그림자
+$btn-shadow-default: 0 2px 4px rgba(0, 0, 0, 0.1);
+$btn-shadow-fab: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+
+/* 기본 믹스인 정의 ===== */
+
+// 색상 믹스인
+@mixin button-variant($type, $variant: 'base') {
+  $base-color: color($type, $variant);
+  $hover-color: color($type, 'hover');
+  $active-color: color($type, 'active');
+  $focus-color: color($type, 'focus');
+  $disabled-color: color($type, 'disabled');
+
+  background-color: $base-color;
+  color: if($variant == 'base', white, color('text', 'text'));
+
+  &:hover:not(:disabled) {
+    background-color: $hover-color;
+  }
+
+  &:active:not(:disabled) {
+    background-color: $active-color;
+  }
+
+  &:focus:not(:disabled) {
+    background-color: $focus-color;
+  }
+
+  &:disabled,
+  &.is-disabled {
+    background-color: $disabled-color;
+    cursor: not-allowed;
+  }
+}
+
+// 사이즈 믹스인
+@mixin button-size($size: 'md') {
+  $size-config: map.get($button-sizes, $size);
+  $override-config: map.get($button-overrides, $size);
+  
+  @if $size-config {
+    padding: map.get($size-config, 'padding');
+    font-size: map.get($size-config, 'font-size');
+    
+    @if $override-config and list.length($override-config) > 0 {
+      @each $property, $value in $override-config {
+        #{$property}: $value;
+      }
+    }
+  } @else {
+    @warn "Button size '#{$size}' is not defined in $button-sizes map";
+  }
+}
+
+// 기본 버튼 스타일 믹스인 
+@mixin button-base($variant: 'default', $type: 'text') {
+  $base-styles: (
+    display: inline-flex,
+    align-items: center,
+    justify-content: center,
+    border: 1px solid color($type, 'border'),
+    border-radius: $btn-border-radius,
+    cursor: pointer,
+    font-weight: 500,
+    text-decoration: none,
+    transition: all 0.2s ease-in-out,
+    white-space: nowrap,
+    gap: 8px
+  );
+
+  $override-styles: map.get($button-base-overrides, $variant);
+
+  @each $property, $value in $base-styles {
+    #{$property}: $value;
+  }
+
+  @if $override-styles {
+    @each $property, $value in $override-styles {
+      #{$property}: $value;
+    }
+  }
+
+  &:disabled,
+  &.is-disabled {
+    $disabled-styles: map.get($button-base-overrides, 'disabled');
+    @if $disabled-styles {
+      @each $property, $value in $disabled-styles {
+        #{$property}: $value;
+      }
+    } @else {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+/* 시스템 맵 ===== */
+
+// 사이즈 설정
+$button-sizes: (
+  'xs': (
+    padding: $btn-padding-xs,
+    font-size: $btn-font-size-xs
+  ),
+  'sm': (
+    padding: $btn-padding-sm,
+    font-size: $btn-font-size-sm
+  ),
+  'md': (
+    padding: $btn-padding-md,
+    font-size: $btn-font-size-md
+  ),
+  'lg': (
+    padding: $btn-padding-lg,
+    font-size: $btn-font-size-lg
+  )
+);
+
+// 색상 시스템
+$color-system: (
+  'primary': (
+    'base': $btn-primary-color,
+    'hover': $btn-primary-hover,
+    'active': $btn-primary-active,
+    'focus': $btn-primary-focus,
+    'disabled': $btn-primary-disabled,
+    'border': $btn-primary-border
+  ),
+  'secondary': (
+    'base': $btn-secondary-color,
+    'hover': $btn-secondary-hover,
+    'active': $btn-secondary-active,
+    'focus': $btn-secondary-focus,
+    'disabled': $btn-secondary-disabled,
+    'border': $btn-secondary-border,
+    'light': color.adjust($btn-secondary-color, $lightness: 40%)
+  ),
+  'text': (
+    'default': $btn-text-bg,
+    'text': $btn-text-color,
+    'border': $btn-text-border,
+    'hover': $btn-text-hover,
+    'active': $btn-text-active,
+    'focus': $btn-text-focus,
+    'disabled': $btn-text-disabled
+  )
+);
+
+/* 커스텀 오버라이드 ===== */
+
+// 색상 오버라이드
+$color-overrides: (
+  'primary': (),
+  'secondary': (),
+  'text': ()
+);
+
+// 기본 스타일 오버라이드
+$button-base-overrides: (
+  'default': (),
+  'disabled': ()
+);
+
+// 사이즈별 오버라이드
+$button-overrides: (
+  'xs': (),
+  'sm': (),
+  'md': (),
+  'lg': ()
+);
+
+/* 유틸리티 함수 ===== */
+
+@function color($type, $variant: 'base') {
+  $type-map: map.get($color-system, $type);
+  @if not $type-map {
+    @warn "Color type '#{$type}' not found in $color-system";
+    @return null;
+  }
+
+  $default-color: map.get($type-map, $variant);
+  @if not $default-color {
+    @warn "Color variant '#{$variant}' not found for type '#{$type}'";
+    @return null;
+  }
+
+  $override-map: map.get($color-overrides, $type);
+  @if $override-map {
+    $override-color: map.get($override-map, $variant);
+    @if $override-color {
+      @return $override-color;
+    }
+  }
+
+  @return $default-color;
+}
+
+/* 버튼 컴포넌트 ===== */
+
+.btn {
+  @include button-base;
+  
+  @each $size, $config in $button-sizes {
+    &-#{$size} {
+      @include button-size($size);
+    }
+  }
+
+  &-full {
+    width: 100%;
+  }
+
+  &-default {
+    @include button-base('default', 'text');
+    @include button-variant('text', 'default');
+    box-shadow: $btn-shadow-default;
+  }
+
+  &-primary {
+    @include button-base('default', 'primary');
+    @include button-variant('primary');
+  }
+
+  &-tonal,
+  &-secondary {
+    @include button-base('default', 'secondary');
+    @include button-variant('secondary', 'light');
+  }
+
+  &-outline {
+    @include button-base('default', 'primary');
+    background-color: transparent;
+    color: color('primary', 'base');
+
+    &:hover:not(:disabled) {
+      background-color: color('primary', 'hover');
+    }
+
+    &:active:not(:disabled) {
+      background-color: color('primary', 'active');
+    }
+
+    &:focus:not(:disabled) {
+      background-color: color('primary', 'focus');
+    }
+
+    &:disabled,
+    &.is-disabled {
+      background-color: color('primary', 'disabled');
+    }
+  }
+
+  &-text {
+    @include button-base('default', 'text');
+    background-color: transparent;
+    color: color('text', 'text');
+    padding: 0;
+    
+    &:hover:not(:disabled) {
+      background-color: color('text', 'hover');
+    }
+
+    &:active:not(:disabled) {
+      background-color: color('text', 'active');
+    }
+
+    &:focus:not(:disabled) {
+      background-color: color('text', 'focus');
+    }
+
+    &:disabled,
+    &.is-disabled {
+      background-color: color('text', 'disabled');
+    }
+  }
+
+  &-icon {
+    padding: 8px;
+    border-radius: 50%;
+  }
+
+  &-fab {
+    border-radius: $btn-fab-border-radius;
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    box-shadow: $btn-shadow-fab;
+
+    &-extended {
+      width: auto;
+      padding: 0 16px;
+      border-radius: 28px;
+    }
+  }
+
+  &-segment {
+    position: relative;
+    background-color: transparent;
+    color: $btn-text-color;
+    border: 1px solid rgba($btn-text-color, 0.2);
+    margin: 0 -1px;
+
+    &:first-child {
+      border-top-left-radius: $btn-border-radius;
+      border-bottom-left-radius: $btn-border-radius;
+    }
+
+    &:last-child {
+      border-top-right-radius: $btn-border-radius;
+      border-bottom-right-radius: $btn-border-radius;
+    }
+
+    &.is-active {
+      background-color: $btn-primary-color;
+      color: white;
+      border-color: $btn-primary-color;
+      z-index: 1;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: rgba($btn-primary-color, 0.1);
+    }
+  }
+
+  &-custom {
+    @include button-base('custom');
+  }
+} 
